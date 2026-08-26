@@ -1,0 +1,33 @@
+{
+  "name": "Whisper-API2",
+  "context": "..",
+  "dockerFile": "../Dockerfile",
+  "forwardPorts": [8000, 8000],
+  "runArgs": ["--gpus", "all", "--name", "whisper-api-devcontainer"],
+  "features": {
+    //"ghcr.io/meaningful-ooo/devcontainer-features/fish:1": {}
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "rebornix.toggle",
+        "oderwat.indent-rainbow",
+        "esbenp.prettier-vscode",
+        "SirTori.indenticator",
+        "ms-python.black-formatter",
+        "WallabyJs.console-ninja",
+        "dbaeumer.vscode-eslint",
+        "christian-kohler.path-intellisense",
+        "ms-python.vscode-pylance",
+        "amodio.toggle-excluded-files"
+      ],
+      "settings": {
+        //"terminal.integrated.defaultProfile.linux": "fish"
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "[javascript]": {
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
+        }
+      }
+    }
+  }
+}

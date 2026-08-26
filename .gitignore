@@ -1,0 +1,18 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Local environments
+.conda/
+.venv/
+venv/
+env/
+
+# Local audio captures and generated transcriptions
+audio_files/
+
+# Local configuration and logs
+.env
+.env.*
+*.log

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+  <head>
+    <title>Test Transcription</title>
+  </head>
+  <body>
+    <h1>Transcribe Audio With FastAPI</h1>
+    <p id="status">Connection status will go here</p>
+    <p id="transcript"></p>
+    <script>
+    navigator.permissions.query({name: 'microphone'}).then((permissionObj) => {
+      console.log(permissionObj.state);
+    }).catch((error) => {
+      console.log('Got error :', error);
+    })
+let mediaRecorder;
+    navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+      mediaRecorder = new MediaRecorder(stream);
+    });
+
+    const socket = new WebSocket("ws://localhost:8000/listen");
+
+    socket.onopen = () => {
+      document.querySelector("#status").textContent = "Connected";
+      console.log({
+        event: "onopen",
+      });
+      mediaRecorder.addEventListener("dataavailable", async (event) => {
+        if (event.data.size > 0 && socket.readyState == 1) {
+          console.log(mediaRecorder.audioBitsPerSecond);
+          console.log(mediaRecorder.audioBitrateMode)
+          console.log(event);          
+          console.log(event.data);
+          socket.send(event.data);
+        }
+      });
+      mediaRecorder.start(250);
+    };
+
+    socket.onmessage = (message) => {
+      const received = message.data;
+      if (received) {
+        console.log(received);
+        document.querySelector("#transcript").textContent += " " + received;
+      }
+    };
+
+    socket.onclose = () => {
+      console.log({
+        event: "onclose",
+      });
+    };
+
+    socket.onerror = (error) => {
+      console.log({
+        event: "onerror",
+        error,
+      });
+    };
+    </script>
+  </body>  
+</html>

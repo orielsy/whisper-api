@@ -1,0 +1,12 @@
+fastapi 
+pydantic
+wave
+pyannote.core
+pyannote.audio==3.0.0
+torchvision
+transformers
+websockets
+aiofiles
+python-multipart
+uvicorn
+watchdog
